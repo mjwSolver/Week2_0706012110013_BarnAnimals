@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Week2_0706012110013_BarnAnimals</string>
+
+    <string name="rumputan">rumputan</string>
+    <string name="biji">biji-bijian</string>
+
+    <string name="ChickenSound">Bok Bok Bok...</string>
+    <string name="CowSound">Mooo...</string>
+    <string name="GoatSound">Mbeehhh....</string>
+
+    <string name="Goat_is_a_Goat">Goat</string>
+    <string name="Cow_is_a_Cow">Cow</string>
+    <string name="Chicken_is_a_Chicken">Chicken</string>
+
+
+
+</resources>

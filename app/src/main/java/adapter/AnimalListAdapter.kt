@@ -14,7 +14,10 @@ import com.ex.week2_0706012110013_barnanimals.databinding.CardAnimalBinding
 import com.ex.week2_0706012110013_barnanimals.formActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import database.GlobalVar
 import database.GlobalVar.Companion.animalList
+import database.GlobalVar.Companion.sortingByAnimal
+import database.GlobalVar.Companion.specificAnimalList
 import model.*
 
 class AnimalListAdapter(var theList:List<Animal>):RecyclerView.Adapter<AnimalListAdapter.AnimalViewHolder>() {
@@ -38,7 +41,7 @@ class AnimalListAdapter(var theList:List<Animal>):RecyclerView.Adapter<AnimalLis
     override fun getItemCount() = theList.size
 
     fun setNewList(newAnimalList:ArrayList<Animal>){
-        theList = newAnimalList;
+        theList = newAnimalList
         notifyDataSetChanged()}
 
     inner class AnimalViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
@@ -84,7 +87,13 @@ class AnimalListAdapter(var theList:List<Animal>):RecyclerView.Adapter<AnimalLis
                             snacky.setAction("Dismiss") { snacky.dismiss() }
                             snacky.show()
 
-                            animalList.removeAt(adapterPosition)
+                            if(sortingByAnimal=="All"){ animalList.removeAt(adapterPosition) }
+                            else {
+                                val indexy = animalList.indexOf(specificAnimalList[adapterPosition])
+                                animalList.removeAt(indexy)
+                                specificAnimalList.removeAt(adapterPosition)
+                            }
+
                             notifyItemChanged(adapterPosition)
                         }
                         .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }

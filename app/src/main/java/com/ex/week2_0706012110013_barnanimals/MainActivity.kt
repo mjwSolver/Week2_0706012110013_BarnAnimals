@@ -14,14 +14,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ex.week2_0706012110013_barnanimals.databinding.ActivityMainBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import database.GlobalVar.Companion.animalList
+import database.GlobalVar.Companion.sortingByAnimal
+import database.GlobalVar.Companion.specificAnimalList
 import model.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bind:ActivityMainBinding
     private lateinit var animalListRV:RecyclerView
-    private var sortingByAnimal = "All"
-    private lateinit var specificAnimalList:ArrayList<Animal>
+//    private var sortingByAnimal = "All"
+//    private lateinit var specificAnimalList:ArrayList<Animal>
     private lateinit var animalAdapter:AnimalListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +44,6 @@ class MainActivity : AppCompatActivity() {
 //        animalAdapter = if(sortingByAnimal=="All"){ AnimalListAdapter(animalList) }
 //            else {preSortAnimalList(); AnimalListAdapter(specificAnimalList) }
 
-
         bind.addAnimalFloatingActionButton.setOnClickListener {
             val myIntent = Intent(this, formActivity::class.java)
             startActivity(myIntent)
@@ -57,8 +58,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun animalListIsValid() = animalList.isNotEmpty()
-    private fun specificAnimalListIsValid() = specificAnimalList.isNotEmpty()
-    private fun specificAnimalListIsInvalid() = specificAnimalList.isEmpty()
+//    private fun specificAnimalListIsValid() = specificAnimalList.isNotEmpty()
+//    private fun specificAnimalListIsInvalid() = specificAnimalList.isEmpty()
 
     private fun preSortAnimalList(){
 //        if(animalList.size<=0){ return }
@@ -71,11 +72,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sortForChicken(){
-        try{
-            for(animal in animalList){ if(animal is Chicken){ specificAnimalList.add(animal) } } }
-        catch(e:Exception){
-            Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-        }
+//        try{
+            for(animal in animalList){ if(animal is Chicken){ specificAnimalList.add(animal) } }
+//        }
+//        catch(e:Exception){ Toast.makeText(this, e.message, Toast.LENGTH_LONG).show() }
     }
 
     private fun sortForCow(){
@@ -96,15 +96,13 @@ class MainActivity : AppCompatActivity() {
 //        specificAnimalList = ArrayList(animalList)
         specificAnimalList = ArrayList()
 
-
         if(sortingByAnimal=="All"){specificAnimalList = animalList}
         else {preSortAnimalList()}
 
-        try{
-            animalAdapter.setNewList(specificAnimalList)}
-        catch(e:Exception){
-            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-        }
+        animalAdapter.setNewList(specificAnimalList)
+
+//        try{ animalAdapter.setNewList(specificAnimalList) }
+//        catch(e:Exception){ Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show() }
 
 //        if(animalListRV.isNotEmpty()){ animalListRV.adapter = specificAnimalAdapter }
     }

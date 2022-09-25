@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils.indexOf
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.Toast
@@ -13,6 +14,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import com.ex.week2_0706012110013_barnanimals.databinding.ActivityFormBinding
 import database.GlobalVar.Companion.animalList
+import database.GlobalVar.Companion.sortingByAnimal
+import database.GlobalVar.Companion.specificAnimalList
 import model.*
 
 class formActivity : AppCompatActivity() {
@@ -98,7 +101,7 @@ class formActivity : AppCompatActivity() {
                 val type = findViewById<RadioButton>(bind.AnimalTypeRadioGroup.checkedRadioButtonId).text.toString()
                 val age = bind.umurHewanTextInputLayout.editText?.text.toString().toInt()
 
-                var message = name.plus(", the $type")
+                var message = name.plus(", the $type,")
 
                 var newAnimal:Animal =
                     when (type) {
@@ -110,8 +113,24 @@ class formActivity : AppCompatActivity() {
 
 
                 //Save the new Data
-                if(theIndex==-1) {animalList.add(newAnimal); message += " was added"}
-                else if(theIndex!=-1) { animalList[theIndex] = newAnimal; message = "Data Updated" }
+
+                if(sortingByAnimal=="All"){
+                    if(theIndex==-1) {animalList.add(newAnimal); message += " was added"}
+                    else if(theIndex!=-1) { animalList[theIndex] = newAnimal; message = "Data Updated" }
+                } else {
+                    if(theIndex==-1 && sortingByAnimal==type){
+                        specificAnimalList.add(newAnimal);message += " was added" }
+                    else if(theIndex!=-1 && sortingByAnimal==type){
+
+                        val indexy = animalList.indexOf(specificAnimalList[theIndex])
+                        animalList[indexy] = newAnimal
+                        specificAnimalList[theIndex] = newAnimal
+                        message = "Data Updated"
+                    }
+                }
+
+
+
 
                 finish()
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
